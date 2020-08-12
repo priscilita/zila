@@ -1,0 +1,18 @@
+import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+url = 'https://iocp.sec.telefonica.com/events'
+jsonevento = '''{"Event":{"date":"2020-06-11","threat_level_id":"1","info":"pruebaZILA","published":true,"analysis":"0","distribution":"3",
+"Attribute":[
+{"type":"domain","category":"Network activity","to_ids":false,"distribution":"0","comment":"","value":"test.com"},
+{"type":"ip-src","category":"Network activity","to_ids":false,"distribution":"0","comment":"","value":"10.112.12.13"},
+{"type":"url","category":"Network activity","to_ids":false,"distribution":"0","comment":"","value":"test2.com"}
+]}}'''
+
+
+headers = {"Accept": "application/json", "content-type": "application/json", "Authorization": "[key]" }
+x = requests.post(url, data = jsonevento, headers=headers, verify=False)
+
+
+print(x.text)
