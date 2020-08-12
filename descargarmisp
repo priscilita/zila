@@ -1,0 +1,34 @@
+import json
+import datetime
+import urllib3
+import csv
+import requests
+myData = []
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+#url = 'https://iocp.sec.telefonica.com/events/csv/download/12988/'
+url = 'https://iocp.sec.telefonica.com/events/13097'
+#print(url)
+headers = {"Accept": "application/json", "content-type": "application/json", "Authorization": "[key]" }
+x = requests.get(url, headers=headers, verify=False)
+#x.headers['content-type']
+#r=x.json()
+
+json=x.json()
+#print(json)
+
+
+if 'Event' in json:
+	if 'Attribute' in json['Event']:
+		infor=json['Event']['info']
+		list_results = json['Event']['Attribute']
+		print(list_results)
+		for atributos in list_results:
+			myData.append([atributos['type'],atributos['value'],atributos['event_id'],infor,'mips'])
+else :
+	print(json)
+
+myFile = open('IoCWastedLockerRansomware.csv', 'w')
+with myFile:
+    writer = csv.writer(myFile)
+    writer.writerows(myData)
