@@ -1,0 +1,20 @@
+input { 
+	twitter {
+		consumer_key => "" 
+		consumer_secret => "" 
+		oauth_token => "" 
+		oauth_token_secret => "" 
+		keywords => ["movistar"]
+		full_tweet => true
+	} 	
+}
+
+
+output {
+	stdout { }
+	file {
+		path => "/Users/priscila/Desktop/scripts/RedeSocial/datamovistar.txt"
+	}
+	elasticsearch {}
+
+}
