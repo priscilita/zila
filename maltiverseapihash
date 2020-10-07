@@ -1,0 +1,16 @@
+import requests
+import csv
+myData = [["blacklist", "classification","filename","md5"]]
+api = 'https://www.virustotal.com/vtapi/v2/file/report'
+params = {'apikey': '', 'resource': '099963cf07ba7184ac0079947c2fe607'}
+response = requests.get(api, params=params)
+sha256=response.json()['sha256']
+print(sha256)
+apim = 'https://api.maltiverse.com/sample/'+sha256
+
+response = requests.get(apim)
+myData.append([response.json()['blacklist'][0]['description'],response.json()['classification'],response.json()['filename'][0], response.json()['md5']])
+myFile = open('hashmaltiverse.csv', 'w')
+with myFile:
+	writer = csv.writer(myFile)
+	writer.writerows(myData)
